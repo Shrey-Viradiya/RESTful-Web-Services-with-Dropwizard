@@ -1,7 +1,6 @@
 package com.dwbook.phonebook;
 
 import io.dropwizard.Application;
-import io.dropwizard.Configuration;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import org.slf4j.Logger;
@@ -19,7 +18,7 @@ public class App extends Application<PhonebookConfiguration>
     public void initialize(Bootstrap<PhonebookConfiguration> b) {}
 
     @Override
-    public void run(PhonebookConfiguration configuration, Environment environment) throws Exception {
+    public void run(PhonebookConfiguration configuration, Environment environment) {
         LOGGER.info("Method App#run() called");
         System.out.println( "Hello world, by Dropwizard!" );
         for (int i = 0; i < configuration.getMessageRepetitions(); i++) {
