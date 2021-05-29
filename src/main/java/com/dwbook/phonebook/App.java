@@ -1,5 +1,6 @@
 package com.dwbook.phonebook;
 
+import com.dwbook.phonebook.resources.ContactResource;
 import io.dropwizard.Application;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
@@ -20,9 +21,7 @@ public class App extends Application<PhonebookConfiguration>
     @Override
     public void run(PhonebookConfiguration configuration, Environment environment) {
         LOGGER.info("Method App#run() called");
-        System.out.println( "Hello world, by Dropwizard!" );
-        for (int i = 0; i < configuration.getMessageRepetitions(); i++) {
-            System.out.println(configuration.getMessage());
-        }
+
+        environment.jersey().register(new ContactResource());
     }
 }
