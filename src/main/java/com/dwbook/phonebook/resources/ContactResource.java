@@ -1,6 +1,8 @@
 package com.dwbook.phonebook.resources;
 
+import com.dwbook.phonebook.dao.ContactDAO;
 import com.dwbook.phonebook.representations.Contact;
+import org.skife.jdbi.v2.DBI;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -13,8 +15,9 @@ public class ContactResource {
     @Path("/{id}")
     public Response getContact(@PathParam("id") int id){
         // retrieve information about the contact with the provided id
+        Contact contact = contactDAO.getContactById(id);
         return Response
-                .ok(new Contact(id, "Shrey", "Viradiya", "+911234567890"))
+                .ok(contact)
                 .build();
     }
 
@@ -42,5 +45,10 @@ public class ContactResource {
         return Response
                 .ok(new Contact(id, contact.getFirstName(), contact.getLastName(), contact.getPhone()))
                 .build();
+    }
+
+    private final ContactDAO contactDAO;
+    public ContactResource(DBI jdbi){
+        this.contactDAO = jdbi.onDemand(ContactDAO.class);
     }
 }

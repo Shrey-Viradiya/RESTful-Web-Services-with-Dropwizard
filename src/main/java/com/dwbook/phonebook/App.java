@@ -2,8 +2,10 @@ package com.dwbook.phonebook;
 
 import com.dwbook.phonebook.resources.ContactResource;
 import io.dropwizard.Application;
+import io.dropwizard.jdbi.DBIFactory;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
+import org.skife.jdbi.v2.DBI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,6 +24,10 @@ public class App extends Application<PhonebookConfiguration>
     public void run(PhonebookConfiguration configuration, Environment environment) {
         LOGGER.info("Method App#run() called");
 
-        environment.jersey().register(new ContactResource());
+        // Create DBI Factory and build a JDBI instance
+        final DBIFactory Factory = new DBIFactory();
+        final DBI jdbi = Factory.build(environment, configuration.getDataSourceFactory(), "mysql");
+
+        environment.jersey().register(new ContactResource(jdbi));
     }
 }
