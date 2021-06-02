@@ -30,6 +30,6 @@ public class App extends Application<PhonebookConfiguration>
         final JdbiFactory Factory = new JdbiFactory();
         final Jdbi jdbi = Factory.build(environment, configuration.getDataSourceFactory(), "mysql");
 
-        environment.jersey().register(new ContactResource(jdbi));
+        environment.jersey().register(new ContactResource(jdbi, environment.getValidator()));
     }
 }
