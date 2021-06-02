@@ -1,5 +1,5 @@
 database:
-  driverClass: com.mysql.jdbc.Driver
+  driverClass: com.mysql.cj.jdbc.Driver
   user: phonebookuser
   password: phonebookpassword
   url: jdbc:mysql://localhost/phonebook

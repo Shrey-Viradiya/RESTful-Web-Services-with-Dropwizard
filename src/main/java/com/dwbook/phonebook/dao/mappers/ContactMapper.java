@@ -1,20 +1,21 @@
 package com.dwbook.phonebook.dao.mappers;
 
 import com.dwbook.phonebook.representations.Contact;
-import org.skife.jdbi.v2.StatementContext;
-import org.skife.jdbi.v2.tweak.ResultSetMapper;
+import org.jdbi.v3.core.mapper.RowMapper;
+import org.jdbi.v3.core.statement.StatementContext;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class ContactMapper implements ResultSetMapper<Contact> {
+public class ContactMapper implements RowMapper<Contact> {
+
     @Override
-    public Contact map(int i, ResultSet resultSet, StatementContext statementContext) throws SQLException {
+    public Contact map(ResultSet rs, StatementContext ctx) throws SQLException {
         return new Contact(
-                resultSet.getInt("id"),
-                resultSet.getString("firstName"),
-                resultSet.getString("lastName"),
-                resultSet.getString("phone")
-                );
+                rs.getInt("id"),
+                rs.getString("firstName"),
+                rs.getString("lastName"),
+                rs.getString("phone")
+        );
     }
 }
