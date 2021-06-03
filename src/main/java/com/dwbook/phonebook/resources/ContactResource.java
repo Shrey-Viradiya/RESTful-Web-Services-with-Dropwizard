@@ -51,7 +51,7 @@ public class ContactResource {
         // else no problem constraints violation
         // store new contact
         int newContactId = contactDAO.createContact(contact.getFirstName(), contact.getLastName(), contact.getPhone());
-        return Response.created(new URI(String.valueOf(newContactId))).build();
+        return Response.created(new URI("contact/" + newContactId)).build();
     }
 
     @DELETE

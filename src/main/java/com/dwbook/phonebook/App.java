@@ -1,7 +1,10 @@
 package com.dwbook.phonebook;
 
+import com.dwbook.phonebook.resources.ClientResource;
 import com.dwbook.phonebook.resources.ContactResource;
+import javax.ws.rs.client.Client;
 import io.dropwizard.Application;
+import io.dropwizard.client.JerseyClientBuilder;
 import io.dropwizard.jdbi3.JdbiFactory;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
@@ -31,5 +34,9 @@ public class App extends Application<PhonebookConfiguration>
         final Jdbi jdbi = Factory.build(environment, configuration.getDataSourceFactory(), "mysql");
 
         environment.jersey().register(new ContactResource(jdbi, environment.getValidator()));
+
+        // build the client and add the resource to the environment
+        final Client client = new JerseyClientBuilder(environment).using(configuration.getJerseyClientConfiguration()).build("REST Client");
+        environment.jersey().register(new ClientResource(client));
     }
 }
